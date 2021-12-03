@@ -1,8 +1,8 @@
 # ABOUT #
 
-See repo DBuddy about the goal of the larger project
+See repo dbuddy about the goal of the larger project
 
-DBuddy client allows for passing dbuddy commands to a server. This improves latency for larger queries and allows for low local processing and dependencies. 
+dbuddy_client allows for passing dbuddy commands to a server. This improves latency for larger queries and allows for low local processing and dependencies. 
 
 # CONFIG #
 
@@ -10,7 +10,7 @@ For use of dbuddy_client, you will need:
 
 * R vers >= 4.0.0
 * System path with
-	* ~/dbuddy/bin
+	* ~/dbuddy_client/bin
 	* ~/R-x.x.x/bin
 
 This should allow you to run dbuddy commands. To see the effect of various commands, look in the text of DanWoodrich/dbuddy/lib/exec
