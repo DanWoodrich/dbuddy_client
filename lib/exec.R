@@ -68,6 +68,24 @@ argID = str2hash(paste(args,collapse=""),hashlen)
 
 request_file = paste(Sys.getenv("COMPATH"),"/requests/request_argID_",argID,"_IPID_",ipID,".txt",sep="")
 
+if(args[1]=="insert"|args[1]=="modify"|args[1]=="delete"){
+  
+  print(args[3])
+  
+  #means DML. So, copy the local file onto the NAS in /transfer by default
+  NASpath = paste(Sys.getenv("COMPATH"),"/transfer/",basename(args[3]),sep="")
+  
+  print(NASpath)
+  file.copy(args[3],NASpath)
+  
+  args[3]= NASpath
+  
+  didDML = TRUE
+  
+}else{
+  didDML=FALSE
+}
+
 print(paste("request ID",argID,"written to",Sys.getenv("COMPATH")))
 writeLines(paste(args,collapse=" "), request_file)
 
@@ -88,6 +106,8 @@ if(args[1]=='pull'){
   #this means it's dml, so output will be specified by --log if desired: 
   if(any(grepl('--log',args))){
     outfile = args[which(args=="--log")+1]
+  }else if(any(grepl('--out',args))){
+    outfile = args[which(args=="--out")+1]
   }else{
     outfile = "PRINT_TO_CONSOLE"
   }
@@ -95,6 +115,9 @@ if(args[1]=='pull'){
   comtype = "DML/other"
   
 }
+
+
+
 
 outdir = paste(Sys.getenv("COMPATH"),"/output",sep="")
 
@@ -138,6 +161,7 @@ while(!any(exists)){
 print("output returned!")
 
 nas_outfile_fp = c(nas_outfile_fp1,nas_outfile_fp2)[exists]
+#print(nas_outfile_fp)
 
 #only copy file to destination if not an error. Want to 
 
@@ -173,4 +197,10 @@ if(grepl(".txt",nas_outfile_fp)){
 }
 
 invisible(file.remove(nas_outfile_fp))
+
+if(didDML){
+  
+  invisible(file.remove(NASpath))
+  
+}
 
