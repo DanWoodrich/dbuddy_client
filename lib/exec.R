@@ -68,7 +68,7 @@ argID = str2hash(paste(args,collapse=""),hashlen)
 
 request_file = paste(Sys.getenv("COMPATH"),"/requests/request_argID_",argID,"_IPID_",ipID,".txt",sep="")
 
-if(args[1]=="insert"|args[1]=="modify"|args[1]=="delete"){
+if(args[1]=="insert"|args[1]=="modify"|args[1]=="delete"|args[1]=="pull_from_data"){
   
   print(args[3])
   
@@ -95,9 +95,14 @@ writeLines(paste(args,collapse=" "), request_file)
 
 
 
-if(args[1]=='pull'){
+if(args[1]=='pull'|args[1]=='pull_from_data'){
   
+  
+  if(args[1]=='pull'){
   outfile = args[3]
+  }else if(args[1]=='pull_from_data'){
+  outfile = args[4]
+  }
   
   comtype = "pull"
   
