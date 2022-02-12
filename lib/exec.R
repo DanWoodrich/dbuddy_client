@@ -156,8 +156,25 @@ while(!any(exists)){
   s = s+0.25
   Sys.sleep(0.25)
   
-  exists[1]<-file.exists(nas_outfile_fp1)
-  exists[2]<-file.exists(nas_outfile_fp2)
+  tryCatch(
+    {
+      invisible(readLines(con = nas_outfile_fp1, n = 1))
+      exists[1] = TRUE
+    },
+    error = function(e){
+      exists[1]=FALSE
+    }
+  ) 
+  
+  tryCatch(
+    {
+      invisible(readLines(con = nas_outfile_fp2, n = 1))
+      exists[2] = TRUE
+    },
+    error = function(e){
+      exists[2]=FALSE
+    }
+  ) 
   
 }
 
